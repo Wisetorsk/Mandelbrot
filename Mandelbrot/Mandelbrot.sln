@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mandelbrot", "Mandelbrot\Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MandelbrotGenerator", "MandelbrotGenerator\MandelbrotGenerator.csproj", "{14B7FD5B-DAD2-4066-9AAB-6F5693A204CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{631C52D5-52AE-4672-BA1E-9396BE4F9758}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MandelGen", "ConsoleApp\MandelGen.csproj", "{631C52D5-52AE-4672-BA1E-9396BE4F9758}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

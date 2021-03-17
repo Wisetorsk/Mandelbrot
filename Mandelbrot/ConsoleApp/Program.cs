@@ -115,7 +115,7 @@ namespace ConsoleApp
                     {
                         filename = args[9];
                         if (filename.Length < 1 || filename is null) throw new Exception("Wrong filename");
-                        Julia.ParallelJulia(resolution, real, imag, numIterations, limit, xCenter, yCenter, radius);
+                        Julia.ParallelJulia(resolution, real, imag, numIterations, limit, xCenter, yCenter, radius, filename);
                     }
                     catch (Exception)
                     {

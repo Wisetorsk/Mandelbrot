@@ -11,10 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ILMerge" Version="3.0.41" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MandelbrotGenerator\MandelbrotGenerator.csproj" />
   </ItemGroup>
 

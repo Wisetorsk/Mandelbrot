@@ -29,7 +29,7 @@ namespace MandelbrotGenerator
                     ystart = (double)yCenter - (double)R;
                     xend = (double)xCenter + (double)R;
                     yend = (double)yCenter + (double)R;
-                    filename += $"[X{xCenter.ToString().Replace(".", ",")}_Y{yCenter.ToString().Replace(".", ",")}]R{R.ToString().Replace(".", ",")}";
+                    filename += $"[X{xCenter.ToString().Replace(".", ",")}_Y{yCenter.ToString().Replace(".", ",")}]R{R.ToString().Replace(".", ",")}_Real{r.ToString().Replace(".", ",")}_I{imag.ToString().Replace(".", ",")}";
                 }
 
                 Console.WriteLine($"Calculating Julia set at x: {xCenter} y:{yCenter} Radius: {R} Iterations: {numIterations}\nOutput resolution {range}x{range} Output filename: {filename}.png\nPlease wait...");
