@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MandelbrotGenerator
 {
-    class Julia
+    public class Julia
     {
         public static void ParallelJulia(int range, double r, double imag, int numIterations = 100, int limit = 4, double? xCenter = null, double? yCenter = null, double? R = null, string filename = "pJulia")
         {

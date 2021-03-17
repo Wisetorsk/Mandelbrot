@@ -6,14 +6,31 @@ namespace ConsoleApp
 {
     class Program
     {
+        static string helptext = @"
+|    This program generates png images of the mandelbrot set.                                                                       |
+|    Use:                                                                                                                           |
+|        mandelbrot <resolution:int> <iterations:int> <limit:int> <x:double> <y:double> <radius:double>                             |
+|                                                                                                                                   |
+|    The program will create a png file of the resulting set in the same folder as the executable.                                  |
+|    The program can also create images of the Julia set by specifying two additional arguments:                                    |
+|    Use:                                                                                                                           |
+|        julia <resolution:int> <iterations:int> <limit:int> <x:double> <y:double> <radius:double> <real:double> <imag:double>      |";
         static int Main(string[] args)
         {
             try
             {
+                Help(args);
                 if (args.Length == 0)
                 {
                     Console.WriteLine("No arguments provided. ");
                     return (int)ExitCode.NoArguments;
+                }
+
+                var mode = args[0].ToLower().Trim();
+                if (mode != "mandelbrot" && mode != "julia")
+                {
+                    Console.WriteLine("Unable to parse mode argument");
+                    return (int)ExitCode.ParseError;
                 }
 
                 if (!int.TryParse(args[1], out int resolution))
@@ -66,17 +83,71 @@ namespace ConsoleApp
                     Console.WriteLine("Unable to parse radius argument");
                     return (int)ExitCode.ParseError;
                 }
-                Mandelbrot.ParallelMandelbrot(resolution, numIterations, limit, xCenter, yCenter, radius);
+
+                if (mode == "mandelbrot")
+                {
+                    string filename;
+                    try
+                    {
+                        filename = args[7];
+                        if (filename.Length < 1 || filename is null) throw new Exception("Wrong filename");
+                        Mandelbrot.ParallelMandelbrot(resolution, numIterations, limit, xCenter, yCenter, radius, filename);
+                    }
+                    catch (Exception)
+                    {
+                        Mandelbrot.ParallelMandelbrot(resolution, numIterations, limit, xCenter, yCenter, radius);
+                    }
+                } else
+                {
+                    if (!Double.TryParse(args[7], NumberStyles.Any, CultureInfo.InvariantCulture, out double real))
+                    {
+                        Console.WriteLine("Unable to parse real number argument");
+                        return (int)ExitCode.ParseError;
+                    }
+
+                    if (!Double.TryParse(args[8], NumberStyles.Any, CultureInfo.InvariantCulture, out double imag))
+                    {
+                        Console.WriteLine("Unable to parse imaginary number argument");
+                        return (int)ExitCode.ParseError;
+                    }
+                    string filename;
+                    try
+                    {
+                        filename = args[9];
+                        if (filename.Length < 1 || filename is null) throw new Exception("Wrong filename");
+                        Julia.ParallelJulia(resolution, real, imag, numIterations, limit, xCenter, yCenter, radius);
+                    }
+                    catch (Exception)
+                    {
+                        Julia.ParallelJulia(resolution, real, imag, numIterations, limit, xCenter, yCenter, radius);
+                    }
+
+                }
 
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine("Please follow this pattern: <mandel/julia> <resolution:int> <iterations:int> <limit:int> <x:double> <y:double> <radius:double>");
-                Console.WriteLine("(for julia)  <mandel/julia> <resolution:int> <iterations:int> <limit:int> <x:double> <y:double> <radius:double> <real:double> <imag:double>");
+                Help(args);
                 return (int)ExitCode.GeneralError;
             }
             
             return (int)ExitCode.Success;
+        }
+
+        public static void Help(string[] args)
+        {
+            foreach (var arg in args)
+            {
+                if (arg.Contains("/h") || arg.Contains("help") || arg.Contains("/help") || arg.Contains(@"\h") || arg.Contains(@"\help") ||
+                    arg.Contains("/H") || arg.Contains("HELP") || arg.Contains("/HELP") || arg.Contains(@"\H") || arg.Contains(@"\HELP"))
+                {
+                    Console.WriteLine(new string('=', Console.WindowWidth));
+                    Console.WriteLine($"{new string(' ', Console.WindowWidth/2 - 15)}Mandelbrot set image generator{new string(' ', Console.WindowWidth/2 - 15)}");
+                    Console.WriteLine(new string('-', Console.WindowWidth));
+                    Console.WriteLine(helptext);
+                    Console.WriteLine(new string('=', Console.WindowWidth));
+                }
+            }
         }
     }
 }
