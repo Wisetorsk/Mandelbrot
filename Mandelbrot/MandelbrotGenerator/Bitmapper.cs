@@ -10,7 +10,7 @@ using System.Drawing.Imaging;
 
 namespace MandelbrotGenerator
 {
-    class Bitmapper
+    public class Bitmapper
     {
         public byte[] BMP { get; set; }
         private int dim;

@@ -23,6 +23,12 @@ namespace Mandelbrot.Controllers
             return View();
         }
 
+        public IActionResult Mandelbrot(MandelSettings parameters)
+        {
+            MandelbrotGenerator.Mandelbrot.ParallelMandelbrot(parameters.Range, parameters.NumIterations, parameters.Limit, parameters.xCenter, parameters.yCenter, parameters.R, "wwwroot/mandel");
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

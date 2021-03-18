@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using MandelbrotGenerator;
 
@@ -6,7 +7,7 @@ namespace ConsoleApp
 {
     class Program
     {
-        static string helptext = @"
+        static readonly string helptext = @"
 |    This program generates png images of the mandelbrot set.                                                                       |
 |    Use:                                                                                                                           |
 |        mandelbrot <resolution:int> <iterations:int> <limit:int> <x:double> <y:double> <radius:double>                             |
@@ -17,71 +18,120 @@ namespace ConsoleApp
 |        julia <resolution:int> <iterations:int> <limit:int> <x:double> <y:double> <radius:double> <real:double> <imag:double>      |";
         static int Main(string[] args)
         {
+            Console.Write("Mode: ");
+            string mode = Console.ReadLine();
+            ExitCode code;
+            if (mode == "test")
+            {
+                //code = TestCircle();
+                code = 0;
+
+            } else
+            {
+                code = RunFromInput(args);
+            }
+            return (int)code;
+        }
+
+        private static void SPEEEED()
+        {
+            var first = new Stopwatch();
+            var second = new Stopwatch();
+            first.Start();
+            for (int i = 0; i < 100000; i++)
+            {
+                var x = Math.Pow(0.002, 2);
+            }
+            first.Stop();
+            second.Start();
+            for (int i = 0; i < 100000; i++)
+            {
+                var y = 0.002 * 0.002;
+            }
+            second.Stop();
+            Console.WriteLine($"Math.Pow used: {first.Elapsed}");
+            Console.WriteLine($"x * x used: {second.Elapsed}");
+        }
+
+        private static ExitCode TestCircle()
+        {
+            var x = new Bitmapper(1000);
+            var points = Geometry.Circle(500, 500, 100, 1000);
+            foreach (var point in points)
+            {
+                x.InsertPixel(point.X, point.Y, 255);
+            }
+            x.Save();
+            return ExitCode.Success;
+        }
+
+        private static ExitCode RunFromInput(string[] args)
+        {
             try
             {
                 Help(args);
                 if (args.Length == 0)
                 {
                     Console.WriteLine("No arguments provided. ");
-                    return (int)ExitCode.NoArguments;
+                    return ExitCode.NoArguments;
                 }
 
                 var mode = args[0].ToLower().Trim();
                 if (mode != "mandelbrot" && mode != "julia" && mode != "ship")
                 {
                     Console.WriteLine("Unable to parse mode argument");
-                    return (int)ExitCode.ParseError;
+                    return ExitCode.ParseError;
                 }
 
                 if (!int.TryParse(args[1], out int resolution))
                 {
                     Console.WriteLine("Unable to parse resolution");
-                    return (int)ExitCode.ParseError;
+                    return ExitCode.ParseError;
                 }
                 if (resolution <= 0)
                 {
                     Console.WriteLine("Resolution argument must be positive and non zero");
-                    return (int)ExitCode.InvalidResolutionArgument;
+                    return ExitCode.InvalidResolutionArgument;
                 }
 
                 if (!int.TryParse(args[2], out int numIterations))
                 {
                     Console.WriteLine("Unable to parse number of iterations");
-                    return (int)ExitCode.ParseError;
+                    return ExitCode.ParseError;
                 }
                 if (numIterations <= 0)
                 {
                     Console.WriteLine("Number of iterations must be positive and non zero");
-                    return (int)ExitCode.InvalidIterationsArgument;
+                    return ExitCode.InvalidIterationsArgument;
                 }
-                
+
                 if (!int.TryParse(args[3], out int limit))
                 {
                     Console.WriteLine("Unable to parse limit argument");
-                    return (int)ExitCode.ParseError;
+                    return ExitCode.ParseError;
                 }
                 if (limit <= 0)
                 {
                     Console.WriteLine("Limit argument must be positive and non zero");
-                    return (int)ExitCode.InvalidLimitArgument;
+                    return ExitCode.InvalidLimitArgument;
                 }
 
                 if (!double.TryParse(args[4], NumberStyles.Any, CultureInfo.InvariantCulture, out double xCenter))
                 {
                     Console.WriteLine("Unable to parse X center argument");
-                    return (int)ExitCode.ParseError;
+                    return ExitCode.ParseError;
                 }
 
                 if (!Double.TryParse(args[5], NumberStyles.Any, CultureInfo.InvariantCulture, out double yCenter))
                 {
                     Console.WriteLine("Unable to parse Y center argument");
-                    return (int)ExitCode.ParseError;
+                    return ExitCode.ParseError;
                 }
 
                 if (!Double.TryParse(args[6], NumberStyles.Any, CultureInfo.InvariantCulture, out double radius))
                 {
                     Console.WriteLine("Unable to parse radius argument");
-                    return (int)ExitCode.ParseError;
+                    return ExitCode.ParseError;
                 }
 
                 if (mode == "mandelbrot")
@@ -97,7 +147,8 @@ namespace ConsoleApp
                     {
                         Mandelbrot.ParallelMandelbrot(resolution, numIterations, limit, xCenter, yCenter, radius);
                     }
-                } else if (mode == "ship")
+                }
+                else if (mode == "ship")
                 {
                     string filename;
                     try
@@ -116,13 +167,13 @@ namespace ConsoleApp
                     if (!Double.TryParse(args[7], NumberStyles.Any, CultureInfo.InvariantCulture, out double real))
                     {
                         Console.WriteLine("Unable to parse real number argument");
-                        return (int)ExitCode.ParseError;
+                        return ExitCode.ParseError;
                     }
 
                     if (!Double.TryParse(args[8], NumberStyles.Any, CultureInfo.InvariantCulture, out double imag))
                     {
                         Console.WriteLine("Unable to parse imaginary number argument");
-                        return (int)ExitCode.ParseError;
+                        return ExitCode.ParseError;
                     }
                     string filename;
                     try
@@ -142,10 +193,9 @@ namespace ConsoleApp
             catch (IndexOutOfRangeException)
             {
                 Help(args);
-                return (int)ExitCode.GeneralError;
+                return ExitCode.GeneralError;
             }
-            
-            return (int)ExitCode.Success;
+            return ExitCode.Success;
         }
 
         public static void Help(string[] args)

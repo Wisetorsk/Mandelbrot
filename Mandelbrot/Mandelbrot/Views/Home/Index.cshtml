@@ -1,8 +1,25 @@
-﻿@{
+﻿@model Mandelbrot.Models.MandelSettings
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-
+    <h1 class="display-4">Mandelbrot generator</h1>
+    @Html.ActionLink("Mandelbrot", "Mandelbrot", "Home")
+    @using (Html.BeginForm("Mandelbrot", "Home"))
+    {
+        @Html.LabelFor(m => m.Range)
+        @Html.TextBoxFor(m => m.Range) <br/>
+        @Html.LabelFor(m => m.NumIterations)
+        @Html.TextBoxFor(m => m.NumIterations) <br />
+        @Html.LabelFor(m => m.Limit)
+        @Html.TextBoxFor(m => m.Limit) <br />
+        @Html.LabelFor(m => m.xCenter)
+        @Html.TextBoxFor(m => m.xCenter) <br />
+        @Html.LabelFor(m => m.yCenter)
+        @Html.TextBoxFor(m => m.yCenter) <br />
+        @Html.LabelFor(m => m.R)
+        @Html.TextBoxFor(m => m.R) <br />
+        <input type="submit" value="Submit" />
+    }
 </div>
