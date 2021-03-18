@@ -3,23 +3,72 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="text-right">
     <h1 class="display-4">Mandelbrot generator</h1>
-    @Html.ActionLink("Mandelbrot", "Mandelbrot", "Home")
-    @using (Html.BeginForm("Mandelbrot", "Home"))
-    {
-        @Html.LabelFor(m => m.Range)
-        @Html.TextBoxFor(m => m.Range) <br/>
-        @Html.LabelFor(m => m.NumIterations)
-        @Html.TextBoxFor(m => m.NumIterations) <br />
-        @Html.LabelFor(m => m.Limit)
-        @Html.TextBoxFor(m => m.Limit) <br />
-        @Html.LabelFor(m => m.xCenter)
-        @Html.TextBoxFor(m => m.xCenter) <br />
-        @Html.LabelFor(m => m.yCenter)
-        @Html.TextBoxFor(m => m.yCenter) <br />
-        @Html.LabelFor(m => m.R)
-        @Html.TextBoxFor(m => m.R) <br />
-        <input type="submit" value="Submit" />
-    }
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h5 class="">Mandelbrot</h5>
+                @using (Html.BeginForm("Mandelbrot", "Home"))
+                {
+                    @Html.LabelFor(m => m.Range)
+                    @Html.TextBoxFor(m => m.Range) <br />
+                    @Html.LabelFor(m => m.NumIterations)
+                    @Html.TextBoxFor(m => m.NumIterations) <br />
+                    @Html.LabelFor(m => m.Limit)
+                    @Html.TextBoxFor(m => m.Limit) <br />
+                    @Html.LabelFor(m => m.xCenter)
+                    @Html.TextBoxFor(m => m.xCenter) <br />
+                    @Html.LabelFor(m => m.yCenter)
+                    @Html.TextBoxFor(m => m.yCenter) <br />
+                    @Html.LabelFor(m => m.R)
+                    @Html.TextBoxFor(m => m.R) <br />
+                    <input type="submit" value="Submit" />
+                }
+            </div>
+
+            <div class="col-sm">
+                <h5 class="">Julia set</h5>
+                @using (Html.BeginForm("Julia", "Home"))
+                {
+                    @Html.LabelFor(m => m.Range)
+                    @Html.TextBoxFor(m => m.Range) <br />
+                    @Html.LabelFor(m => m.NumIterations)
+                    @Html.TextBoxFor(m => m.NumIterations) <br />
+                    @Html.LabelFor(m => m.Limit)
+                    @Html.TextBoxFor(m => m.Limit) <br />
+                    @Html.LabelFor(m => m.xCenter)
+                    @Html.TextBoxFor(m => m.xCenter) <br />
+                    @Html.LabelFor(m => m.yCenter)
+                    @Html.TextBoxFor(m => m.yCenter) <br />
+                    @Html.LabelFor(m => m.R)
+                    @Html.TextBoxFor(m => m.R) <br />
+                    @Html.LabelFor(m => m.Real)
+                    @Html.TextBoxFor(m => m.Real) <br />
+                    @Html.LabelFor(m => m.Imag)
+                    @Html.TextBoxFor(m => m.Imag) <br />
+                    <input type="submit" value="Submit" />
+                }
+            </div>
+            <div class="col-sm">
+                <h5 class="">Burning ship</h5>
+                @using (Html.BeginForm("Ship", "Home"))
+                {
+                    @Html.LabelFor(m => m.Range)
+                    @Html.TextBoxFor(m => m.Range) <br />
+                    @Html.LabelFor(m => m.NumIterations)
+                    @Html.TextBoxFor(m => m.NumIterations) <br />
+                    @Html.LabelFor(m => m.Limit)
+                    @Html.TextBoxFor(m => m.Limit) <br />
+                    @Html.LabelFor(m => m.xCenter)
+                    @Html.TextBoxFor(m => m.xCenter) <br />
+                    @Html.LabelFor(m => m.yCenter)
+                    @Html.TextBoxFor(m => m.yCenter) <br />
+                    @Html.LabelFor(m => m.R)
+                    @Html.TextBoxFor(m => m.R) <br />
+                    <input type="submit" value="Submit" />
+                }
+            </div>
+        </div>
+    </div>
 </div>

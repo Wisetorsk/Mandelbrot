@@ -29,6 +29,18 @@ namespace Mandelbrot.Controllers
             return View();
         }
 
+        public IActionResult Julia(MandelSettings parameters)
+        {
+            MandelbrotGenerator.Julia.ParallelJulia(parameters.Range, parameters.Real, parameters.Imag, parameters.NumIterations, parameters.Limit, parameters.xCenter, parameters.yCenter, parameters.R, "wwwroot/julia");
+            return View();
+        }
+
+        public IActionResult Ship(MandelSettings parameters)
+        {
+            MandelbrotGenerator.BurningShip.ParallelBurningShip(parameters.Range, parameters.NumIterations, parameters.Limit, parameters.xCenter, parameters.yCenter, parameters.R, "wwwroot/ship");
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

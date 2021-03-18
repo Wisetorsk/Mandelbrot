@@ -8,7 +8,7 @@ namespace MandelbrotGenerator
 {
     public class Julia
     {
-        public static void ParallelJulia(int range, double r, double imag, int numIterations = 100, int limit = 4, double? xCenter = null, double? yCenter = null, double? R = null, string filename = "pJulia")
+        public static void ParallelJulia(int range, double r, double imag, int numIterations = 100, int limit = 4, double? xCenter = null, double? yCenter = null, double? R = null, string filename = null)
         {
             {
 
@@ -22,6 +22,7 @@ namespace MandelbrotGenerator
                     xend = 1.5;
                     ystart = -1.5;
                     yend = 1.5;
+                    filename = (filename is null) ? "pJulia" : filename;
                 }
                 else
                 {
@@ -29,7 +30,7 @@ namespace MandelbrotGenerator
                     ystart = (double)yCenter - (double)R;
                     xend = (double)xCenter + (double)R;
                     yend = (double)yCenter + (double)R;
-                    filename += $"[X{xCenter.ToString().Replace(".", ",")}_Y{yCenter.ToString().Replace(".", ",")}]R{R.ToString().Replace(".", ",")}_Real{r.ToString().Replace(".", ",")}_I{imag.ToString().Replace(".", ",")}";
+                    filename = (filename is null) ? $"Julia[X{xCenter.ToString().Replace(".", ",")}_Y{yCenter.ToString().Replace(".", ",")}]R{R.ToString().Replace(".", ",")}_Real{r.ToString().Replace(".", ",")}_I{imag.ToString().Replace(".", ",")}" : filename;
                 }
 
                 Console.WriteLine($"Calculating Julia set at x: {xCenter} y:{yCenter} Radius: {R} Iterations: {numIterations}\nOutput resolution {range}x{range} Output filename: {filename}.png\nPlease wait...");
