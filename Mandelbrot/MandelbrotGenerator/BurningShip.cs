@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MandelbrotGenerator
 {
-    public class Mandelbrot
+    public class BurningShip
     {
-        public static void ParallelMandelbrot(int range, int numIterations = 100, int limit = 4, double? xCenter = null, double? yCenter = null, double? R = null, string filename = null)
+        public static void ParallelBurningShip(int range, int numIterations = 100, int limit = 4, double? xCenter = null, double? yCenter = null, double? R = null, string filename = null)
         {
             double xstart;// 0.5; //-2
             double xend;// 0.2; //1
@@ -18,7 +20,7 @@ namespace MandelbrotGenerator
                 xend = 1;// 0.2; //1
                 ystart = -1.5;// 0.1; // -1.5
                 yend = 1.5;// .4; // 1.5
-                filename = (filename is null) ? "Mandelbrot" : filename;
+                filename = (filename is null) ? "BurningShip" : filename;
             }
             else
             {
@@ -26,10 +28,10 @@ namespace MandelbrotGenerator
                 ystart = (double)yCenter - (double)R;
                 xend = (double)xCenter + (double)R;
                 yend = (double)yCenter + (double)R;
-                filename = (filename is null) ? $"Mandelbrot[X{xCenter.ToString().Replace(".", ",")}_Y{yCenter.ToString().Replace(".", ",")}]R{R.ToString().Replace(".", ",")}" : filename;
+                filename = (filename is null) ? $"BurningShip[X{xCenter.ToString().Replace(".", ",")}_Y{yCenter.ToString().Replace(".", ",")}]R{R.ToString().Replace(".", ",")}" : filename;
             }
 
-            Console.WriteLine($"Calculating Mandelbrot set at x: {xCenter} y:{yCenter} Radius: {R} Iterations: {numIterations}\nOutput resolution {range}x{range} Output filename: {filename}.png\nPlease wait...");
+            Console.WriteLine($"Calculating Burning ship Fractal set at x: {xCenter} y:{yCenter} Radius: {R} Iterations: {numIterations}\nOutput resolution {range}x{range} Output filename: {filename}.png\nPlease wait...");
             var irange = Enumerable.Range(0, range).ToArray();
             var indexes = irange.Select(i => (i, Enumerable.Range(0, range)));
             var i = irange.Select(i => xstart + (xend - xstart) * ((double)i / (irange.Length - 1))).ToArray();
@@ -71,8 +73,8 @@ namespace MandelbrotGenerator
             ylast = 0;
             while (n < maxIterations && x * x + y * y <= limit)
             {
-                x = (xlast * xlast) - (ylast * ylast) + x0;
-                y = 2 * xlast * ylast + y0;
+                x = (xlast * xlast) - (ylast * ylast) - x0;//x = (xlast * xlast) - (ylast * ylast) + x0;
+                y = 2 * Math.Abs(xlast * ylast) - y0; //y = 2 * xlast * ylast + y0;
 
                 xlast = x;
                 ylast = y;

@@ -27,7 +27,7 @@ namespace ConsoleApp
                 }
 
                 var mode = args[0].ToLower().Trim();
-                if (mode != "mandelbrot" && mode != "julia")
+                if (mode != "mandelbrot" && mode != "julia" && mode != "ship")
                 {
                     Console.WriteLine("Unable to parse mode argument");
                     return (int)ExitCode.ParseError;
@@ -97,7 +97,21 @@ namespace ConsoleApp
                     {
                         Mandelbrot.ParallelMandelbrot(resolution, numIterations, limit, xCenter, yCenter, radius);
                     }
-                } else
+                } else if (mode == "ship")
+                {
+                    string filename;
+                    try
+                    {
+                        filename = args[7];
+                        if (filename.Length < 1 || filename is null) throw new Exception("Wrong filename");
+                        BurningShip.ParallelBurningShip(resolution, numIterations, limit, xCenter, yCenter, radius, filename);
+                    }
+                    catch (Exception)
+                    {
+                        BurningShip.ParallelBurningShip(resolution, numIterations, limit, xCenter, yCenter, radius);
+                    }
+                }
+                else
                 {
                     if (!Double.TryParse(args[7], NumberStyles.Any, CultureInfo.InvariantCulture, out double real))
                     {

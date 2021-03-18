@@ -47,7 +47,7 @@ namespace MandelbrotGenerator
                 {
                     for (int y = 0; y < yLength; y++)
                     {
-                        values[ind] = (x, y, i[x], j[y]);
+                        values[ind] = (x, y, i[y], j[x]);
                         ind++;
                     }
                 }

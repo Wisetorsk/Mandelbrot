@@ -358,10 +358,12 @@ namespace MandelbrotGenerator
             // Write the byte array to file. 
             unsafe
             {
+                //Array.Reverse(BMP);
                 fixed (byte* ptr = BMP)
                 {
                     using (Bitmap image = new Bitmap(Dim, Dim, Dim * Stride, PixelFormat.Format32bppRgb, new IntPtr(ptr)))//(TextWriter sw = new StreamWriter(Filename))
                     {
+                        image.RotateFlip(RotateFlipType.Rotate270FlipNone);
                         image.Save(Filename);
                     }
                 }
