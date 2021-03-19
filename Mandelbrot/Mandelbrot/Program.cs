@@ -21,6 +21,7 @@ namespace Mandelbrot
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("http://*8000"); // Expose on port 8000
                 });
     }
 }
