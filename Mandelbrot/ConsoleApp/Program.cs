@@ -24,6 +24,7 @@ namespace ConsoleApp
             if (mode == "test")
             {
                 //code = TestCircle();
+                MandelSet();
                 code = 0;
 
             } else
@@ -31,6 +32,18 @@ namespace ConsoleApp
                 code = RunFromInput(args);
             }
             return (int)code;
+        }
+
+        private static void MandelSet()
+        {
+            double R = 0.00000001;
+            double increment = 0.0000001;
+            for (int i = 0; i < 5000; i++)
+            {
+                R = R + increment;
+                increment += 0.0000002;
+                Mandelbrot.ParallelMandelbrot(1000, 5000, 8, -1.790025, 0, R, $"sequence/mandel{i:d8}", false);
+            }
         }
 
         private static void SPEEEED()
@@ -56,7 +69,8 @@ namespace ConsoleApp
         private static ExitCode TestCircle()
         {
             var x = new Bitmapper(1000);
-            var points = Geometry.Circle(500, 500, 100, 1000);
+            //var points = Geometry.Circle(500, 500, 100, 1000);
+            var points = Geometry.Supershape(10, 10, 1, 7, 8, 6, 1000, 500, 500);
             foreach (var point in points)
             {
                 x.InsertPixel(point.X, point.Y, 255);

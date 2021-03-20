@@ -6,7 +6,8 @@ namespace MandelbrotGenerator
 {
     public class Mandelbrot
     {
-        public static void ParallelMandelbrot(int range, int numIterations = 100, int limit = 4, double? xCenter = null, double? yCenter = null, double? R = null, string filename = null)
+        //private static bool verbose = false;
+        public static void ParallelMandelbrot(int range, int numIterations = 100, int limit = 4, double? xCenter = null, double? yCenter = null, double? R = null, string filename = null, bool verbose = true)
         {
             double xstart;// 0.5; //-2
             double xend;// 0.2; //1
@@ -29,7 +30,7 @@ namespace MandelbrotGenerator
                 filename = (filename is null) ? $"Mandelbrot[X{xCenter.ToString().Replace(".", ",")}_Y{yCenter.ToString().Replace(".", ",")}]R{R.ToString().Replace(".", ",")}" : filename;
             }
 
-            Console.WriteLine($"Calculating Mandelbrot set at x: {xCenter} y:{yCenter} Radius: {R} Iterations: {numIterations}\nOutput resolution {range}x{range} Output filename: {filename}.png\nPlease wait...");
+            if (verbose) Console.WriteLine($"Calculating Mandelbrot set at x: {xCenter} y:{yCenter} Radius: {R} Iterations: {numIterations}\nOutput resolution {range}x{range} Output filename: {filename}.png\nPlease wait...");
             var irange = Enumerable.Range(0, range).ToArray();
             var indexes = irange.Select(i => (i, Enumerable.Range(0, range)));
             var i = irange.Select(i => xstart + (xend - xstart) * ((double)i / (irange.Length - 1))).ToArray();
@@ -54,7 +55,7 @@ namespace MandelbrotGenerator
                 var val = mandel(i.Item3, i.Item4, numIterations, limit);
                 bmp.InsertPixel(i.Item1, i.Item2, val);
             });
-            Console.WriteLine("Calculation complete, saving image...");
+            if (verbose) Console.WriteLine("Calculation complete, saving image...");
             bmp.Save();
         }
 

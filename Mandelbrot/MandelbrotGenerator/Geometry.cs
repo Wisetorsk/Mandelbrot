@@ -68,5 +68,53 @@ namespace MandelbrotGenerator
 
             return points;
         }
+
+        public static Point[] Supershape(double a, double b, double n1, double n2, double n3, double m, int length, int x0, int y0)
+        {
+            var points = new Point[length];
+            for (int i = 0; i < length; i++)
+            {
+                var theta = i * Math.PI / length;
+                var first = First(a, m, theta);
+                first = Math.Abs(first);
+                first = Math.Pow(first, n2);
+
+                var second = Second(b, m, theta);
+                second = Math.Abs(second);
+                second = Math.Pow(second, n3);
+
+                int x, y;
+                var r = 100 * Math.Pow(first + second, 1 / n1);
+                if (Math.Abs(r) == 0)
+                {
+                    x = 0;
+                    y = 0;
+                } else
+                {
+                    x = x0 + (int)Math.Round(r * Math.Cos(theta));
+                    y = y0 + (int)Math.Round(r * Math.Sin(theta));
+                }
+
+                points[i] = new Point(x, y);
+            }
+            return points;
+        }
+
+        private static double K(double m, double theta)
+        {
+            return m * theta / 4;
+        }
+
+        private static double First(double a, double m, double theta)
+        {
+            return K(m, theta) / a;
+        }
+
+        private static double Second(double b, double m, double theta)
+        {
+            return K(m, theta) / b;
+        }
+
+
     }
 }

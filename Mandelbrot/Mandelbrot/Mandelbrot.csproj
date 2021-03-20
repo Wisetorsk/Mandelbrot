@@ -2,10 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>8b8a9708-46a2-4525-ba25-a53087396d05</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <Dockerfiletag>mandelbrot_arm</Dockerfiletag>
+
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MandelbrotGenerator\MandelbrotGenerator.csproj" />
   </ItemGroup>
-
 </Project>
